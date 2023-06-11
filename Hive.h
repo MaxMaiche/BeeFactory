@@ -20,12 +20,16 @@ private:
     int beeCount;
     int beeCapacity;
     vector<Bee*> bees;
+    sf::CircleShape shape;
+    int mapSize;
 
 public:
     // constructor
-    Hive(int x, int y, int beeCapacity);
+    Hive(int x, int y, int beeCapacity, int mapSize);
     // destructor
     ~Hive();
+    //getBees
+    vector<Bee*> getBees();
     // print
     void print();
     // add bee

@@ -14,17 +14,22 @@ Garden::Garden(int maxHives, int mapSize) {
 
 // destructor
 Garden::~Garden() {
-    for(int i = 0; i < hives.size(); i++) {
-        delete hives[i];
+    for(auto & hive : hives) {
+        delete hive;
     }
-};
+}
+
+// getHives
+std::vector<Hive*> Garden::getHives() {
+    return hives;
+}
 
 // print
 void Garden::print() {
     std::cout << "Garden: size=" << mapSize << std::endl;
     // print hives
-    for (int i = 0; i < hives.size(); i++) {
-        hives[i]->print();
+    for (auto & hive : hives) {
+        hive->print();
     }
 }
 
@@ -35,7 +40,7 @@ bool Garden::addHive(Hive *hive) {
         flowerCount++;
         return true;
     } else {
-        std::cout << "Garden is full" << std::endl;
+        //std::cout << "Garden is full" << std::endl;
         return false;
     }
 }
@@ -44,29 +49,29 @@ bool Garden::addHive(Hive *hive) {
 // add hives
 void Garden::addHives(int hiveCount, int beeCapacity) {
     for (int i = 0; i < hiveCount; i++) {
-        addHive(new Hive(rand() % mapSize, rand() % mapSize, beeCapacity));
+        addHive(new Hive(rand() % mapSize, rand() % mapSize, beeCapacity, mapSize));
     }
 }
 
 // make hives full
 void Garden::makeHivesFull() {
-    for (int i = 0; i < hives.size(); i++) {
-        hives[i]->makeFull();
+    for (auto & hive : hives) {
+        hive->makeFull();
     }
 }
 
 // draw
 void Garden::draw(sf::RenderWindow &window) {
     // draw hives
-    for (int i = 0; i < hives.size(); i++) {
-        hives[i]->draw(window);
+    for (auto & hive : hives) {
+        hive->draw(window);
     }
 }
 
 // update
 void Garden::update() {
     // update hives
-    for (int i = 0; i < hives.size(); i++) {
-        hives[i]->update();
+    for (auto & hive : hives) {
+        hive->update();
     }
 }

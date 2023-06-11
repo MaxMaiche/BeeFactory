@@ -23,6 +23,8 @@ public:
     Garden(int maxHives, int mapSize);
     // destructor
     ~Garden();
+    // getHives
+    vector<Hive*> getHives();
     // print
     void print();
     // add hive
@@ -36,6 +38,8 @@ public:
     void draw(sf::RenderWindow &window);
     // update
     void update();
+
+
 };
 
 

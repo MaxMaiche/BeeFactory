@@ -19,11 +19,12 @@ private:
     sf::Color color;
     sf::CircleShape shape;
     double speed;
-    int rotation;
+    float rotation;
+    int mapSize;
 
 public:
     // constructor
-    Bee(int age, int x, int y, sf::Color color);
+    Bee(int age, int x, int y, sf::Color color, int mapSize);
 
     // destructor
     ~Bee();

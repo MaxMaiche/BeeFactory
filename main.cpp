@@ -8,14 +8,14 @@ const int MAPSIZE = 1000;  // Largeur de la fenêtre
 
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(MAPSIZE, MAPSIZE), "Simulation");
-    sf::Event event;
+    sf::RenderWindow window(sf::VideoMode(MAPSIZE, MAPSIZE), "Bee Factory");
+    sf::Event event{};
 
     // Creation jardin
-    Garden *garden = new Garden(10, MAPSIZE);
+    auto *garden = new Garden(10, MAPSIZE);
 
     // Creation ruche
-    garden->addHives(10, 1000);
+    garden->addHives(10, 10);
 
     // Creation abeilles
     garden->makeHivesFull();
@@ -48,6 +48,7 @@ int main() {
         //garden.print();
     }
 
+    garden->print();
     delete garden;
 
     return 0;

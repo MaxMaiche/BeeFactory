@@ -7,17 +7,20 @@
 #include "Bee.h"
 
 // constructor
-Hive::Hive(int x, int y, int beeCapacity) {
+Hive::Hive(int x, int y, int beeCapacity, int mapSize) {
     this->x = x;
     this->y = y;
     this->beeCapacity = beeCapacity;
     this->beeCount = 0;
+    this->mapSize = mapSize;
 
     // random color
     this->color = sf::Color(rand() % 255, rand() % 255, rand() % 255);
+    sf::CircleShape shape(10);
+    shape.setFillColor(color);
+    shape.setPosition(x, y);
 
-
-    std::cout << "Hive created" << std::endl;
+    //std::cout << "Hive created" << std::endl;
 }
 
 // destructor
@@ -25,6 +28,11 @@ Hive::~Hive() {
     for (int i = 0; i < beeCount; i++) {
         delete bees[i];
     }
+}
+
+// getBees
+std::vector<Bee*> Hive::getBees() {
+    return bees;
 }
 
 // print
@@ -43,22 +51,19 @@ bool Hive::addBee(Bee* bee) {
         beeCount++;
         return true;
     } else {
-        std::cout << "Hive is full" << std::endl;
+        //std::cout << "Hive is full" << std::endl;
         return false;
     }
 }
 
 // make it full
 void Hive::makeFull() {
-    while (addBee(new Bee(1, x, y, color)));
+    while (addBee(new Bee(1, x, y, color, mapSize)));
 }
 
 // draw
 void Hive::draw(sf::RenderWindow &window) {
     // draw hive
-    sf::CircleShape shape(10);
-    shape.setFillColor(color);
-    shape.setPosition(x, y);
     window.draw(shape);
 
     // draw bees
