@@ -1,0 +1,12 @@
+# ninja log v5
+3	583	7081885266599673	CMakeFiles/untitled.dir/main.cpp.obj	71770c754d5fd143
+1	164	7081792080079393	build.ninja	5866b48f73033da6
+3	816	7081852238692975	CMakeFiles/untitled.dir/Bee.cpp.obj	29554ac3a3ea5059
+584	710	7081885267830789	untitled.exe	8b6d7c5559bbd4f9
+15	691	7081861759823862	CMakeFiles/untitled.dir/Hive.cpp.obj	ea847acf20c2c3b1
+1	11	0	clean	b8f5337ad683005f
+8	684	7081884482309665	CMakeFiles/untitled.dir/Garden.cpp.obj	752d9fcfc386cb45
+4	596	7081885471684300	CMakeFiles/untitled.dir/main.cpp.obj	71770c754d5fd143
+596	725	7081885472945444	untitled.exe	8b6d7c5559bbd4f9
+3	583	7081885789517781	CMakeFiles/untitled.dir/main.cpp.obj	71770c754d5fd143
+583	716	7081885790818962	untitled.exe	8b6d7c5559bbd4f9
