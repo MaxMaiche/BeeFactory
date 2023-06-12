@@ -77,6 +77,13 @@ build CMakeFiles/untitled.dir/Garden.cpp.obj: CXX_COMPILER__untitled_Debug C$:/U
   OBJECT_DIR = CMakeFiles\untitled.dir
   OBJECT_FILE_DIR = CMakeFiles\untitled.dir
 
+build CMakeFiles/untitled.dir/Flower.cpp.obj: CXX_COMPILER__untitled_Debug C$:/Users/Max/CLionProjects/BeeFactory/Flower.cpp || cmake_object_order_depends_target_untitled
+  DEP_FILE = CMakeFiles\untitled.dir\Flower.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -isystem C:/Users/Max/CLionProjects/BeeFactory/lib/include
+  OBJECT_DIR = CMakeFiles\untitled.dir
+  OBJECT_FILE_DIR = CMakeFiles\untitled.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target untitled
@@ -85,7 +92,7 @@ build CMakeFiles/untitled.dir/Garden.cpp.obj: CXX_COMPILER__untitled_Debug C$:/U
 #############################################
 # Link the executable untitled.exe
 
-build untitled.exe: CXX_EXECUTABLE_LINKER__untitled_Debug CMakeFiles/untitled.dir/main.cpp.obj CMakeFiles/untitled.dir/Bee.cpp.obj CMakeFiles/untitled.dir/Hive.cpp.obj CMakeFiles/untitled.dir/Garden.cpp.obj | C$:/Users/Max/CLionProjects/BeeFactory/lib/lib/libsfml-graphics-d.a C$:/Users/Max/CLionProjects/BeeFactory/lib/lib/libsfml-window-d.a C$:/Users/Max/CLionProjects/BeeFactory/lib/lib/libsfml-system-d.a
+build untitled.exe: CXX_EXECUTABLE_LINKER__untitled_Debug CMakeFiles/untitled.dir/main.cpp.obj CMakeFiles/untitled.dir/Bee.cpp.obj CMakeFiles/untitled.dir/Hive.cpp.obj CMakeFiles/untitled.dir/Garden.cpp.obj CMakeFiles/untitled.dir/Flower.cpp.obj | C$:/Users/Max/CLionProjects/BeeFactory/lib/lib/libsfml-graphics-d.a C$:/Users/Max/CLionProjects/BeeFactory/lib/lib/libsfml-window-d.a C$:/Users/Max/CLionProjects/BeeFactory/lib/lib/libsfml-system-d.a
   FLAGS = -g
   LINK_LIBRARIES = C:/Users/Max/CLionProjects/BeeFactory/lib/lib/libsfml-graphics-d.a  C:/Users/Max/CLionProjects/BeeFactory/lib/lib/libsfml-window-d.a  C:/Users/Max/CLionProjects/BeeFactory/lib/lib/libsfml-system-d.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\untitled.dir

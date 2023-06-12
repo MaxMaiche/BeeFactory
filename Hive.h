@@ -16,11 +16,11 @@ class Hive {
 private:
     int x;
     int y;
+    int score;
     sf::Color color;
     int beeCount;
     int beeCapacity;
     vector<Bee*> bees;
-    sf::CircleShape shape;
     int mapSize;
 
 public:
@@ -28,18 +28,30 @@ public:
     Hive(int x, int y, int beeCapacity, int mapSize);
     // destructor
     ~Hive();
+    // getX
+    int getX() const;
+    // getY
+    int getY() const;
+    // getScore
+    int getScore() const;
     //getBees
-    vector<Bee*> getBees();
+    vector<Bee*> & getBees();
     // print
     void print();
     // add bee
     bool addBee(Bee *bee);
     // make it full
     void makeFull();
+    // add score
+    void addScore(int score);
     // draw
     void draw(sf::RenderWindow &window);
     // update
     void update();
+    // make bees follow mouse
+    void makeHivesFollow(int x, int y);
+    // make bees stop following mouse
+    void makeHivesStopFollowing();
 };
 
 

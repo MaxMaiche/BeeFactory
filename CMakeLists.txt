@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(SFML_DIR "lib/lib/cmake/SFML")
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 
-add_executable(untitled main.cpp Bee.cpp Bee.h Hive.h Hive.cpp Garden.h Garden.cpp)
+add_executable(untitled main.cpp Bee.cpp Bee.h Hive.h Hive.cpp Garden.h Garden.cpp Flower.cpp Flower.h)
 
 # Ajout des fichiers de bibliothèque lib à l'exécutable
 target_link_libraries(untitled sfml-graphics sfml-system sfml-window)

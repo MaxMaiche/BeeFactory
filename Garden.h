@@ -4,6 +4,7 @@
 
 #include <vector>
 #include "Hive.h"
+#include "Flower.h"
 
 #ifndef UNTITLED_GARDEN_H
 #define UNTITLED_GARDEN_H
@@ -17,6 +18,8 @@ private:
     int actualHives;
     int flowerCount;
     vector<Hive*> hives;
+    vector<Flower*> flowers;
+    vector<Bee*> beesThatNeedNewFlower;
 
 public:
     // constructor
@@ -24,7 +27,7 @@ public:
     // destructor
     ~Garden();
     // getHives
-    vector<Hive*> getHives();
+    vector<Hive*> & getHives();
     // print
     void print();
     // add hive
@@ -33,13 +36,30 @@ public:
     void addHives(int hiveCount, int beeCapacity);
     // Make hives full
     void makeHivesFull();
-
+    // add flower
+    void addFlower(Flower *flower);
+    // add flowers
+    void addFlowers(int nbFlower, int flowerScore);
+    // Check if a flower score is 0
+    void checkFlowerScore();
+    // Check Bee on flower or Hive
+    void checkBeeOnFlowerOrHive();
     // draw
-    void draw(sf::RenderWindow &window);
+    void draw(sf::RenderWindow &window) const;
     // update
     void update();
-
-
+    // make bees follow mouse
+    void makeGardenFollow(int x, int y);
+    // make bees stop following mouse
+    void makeGardenStopFollowing();
+    // make bees follow random flower
+    void makeGardenFollowRandomFlower();
+    // Make one bee follow random flower
+    void makeOneBeeFollowRandomFlower(Bee* bee);
+    // assign new flower to beethatneednewflower
+    void assignNewFlowerToBeeThatNeedNewFlower();
+    // check bee full
+    void checkBeeFull();
 };
 
 
