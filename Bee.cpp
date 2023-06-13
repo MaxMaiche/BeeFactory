@@ -152,8 +152,15 @@ int Bee::dropPollen() {
     return temp;
 }
 
-
 // Bee is full
 bool Bee::isFull() {
     return Capacity == 3;
+}
+
+BeeTarget* Bee::getTarget() {
+    return target;
+}
+
+void Bee::setTarget(BeeTarget* newTargetAddress) {
+    target = newTargetAddress;
 }

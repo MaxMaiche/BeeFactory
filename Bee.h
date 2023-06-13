@@ -9,6 +9,8 @@
 
 class Hive;
 class Flower;
+class BeeTarget;
+
 // create new Bee class
 class Bee {
 private:
@@ -26,6 +28,7 @@ private:
     int followX;
     int followY;
 
+    BeeTarget* target;
 
 
 public:
@@ -65,6 +68,8 @@ public:
     // Bee is full
     bool isFull();
 
+    BeeTarget* getTarget();
+    void setTarget(BeeTarget*);
 
 };
 

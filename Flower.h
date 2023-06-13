@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Bee.h"
+#include "BeeTarget.h"
 
 #ifndef LEARNING_FLOWER_H
 #define LEARNING_FLOWER_H
@@ -13,11 +14,9 @@
 
 using namespace std;
 
-class Flower {
+class Flower : public BeeTarget {
 
 private:
-    int x;
-    int y;
     int score;
     sf::Color color;
     vector<Bee*> beesThatFollow;
@@ -26,8 +25,6 @@ public:
     Flower(int x, int y, int score);
     ~Flower();
 
-    int getX() const;
-    int getY() const;
     vector<Bee*> & getBeesThatFollow();
     void addBeeThatFollow(Bee *bee);
     void removeBeeThatFollow(Bee *bee);
@@ -38,6 +35,8 @@ public:
     int distanceTo(int x, int y) const;
     void print() const;
     void draw(sf::RenderWindow &window) const;
+
+    bool isFlower() const override;
 
 };
 

@@ -7,17 +7,18 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "BeeTarget.h"
 
 using namespace std;
 
 class Bee;
 class Flower;
 
-class Hive {
+class Hive : public BeeTarget {
 private:
 
-    int x;
-    int y;
+    //int x;
+    //int y;
     int score;
     int mapSize;
     int beeCount;
@@ -34,9 +35,9 @@ public:
     // destructor
     ~Hive();
     // getX
-    int getX() const;
+    //int getX() const;
     // getY
-    int getY() const;
+    //int getY() const;
     // getScore
     int getScore() const;
     //getBees
@@ -69,6 +70,9 @@ public:
     void makeHivesFollow(int x, int y);
     // make bees stop following mouse
     void makeHivesStopFollowing();
+
+    bool isHive() const override;
+
 };
 
 

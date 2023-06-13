@@ -7,9 +7,7 @@
 #include "Bee.h"
 
 // constructor
-Hive::Hive(int x, int y, int beeCapacity, int mapSize) {
-    this->x = x;
-    this->y = y;
+Hive::Hive(int x, int y, int beeCapacity, int mapSize) : BeeTarget(x, y) {
     this->score = 0;
     this->mapSize = mapSize;
     this->beeCount = 0;
@@ -19,7 +17,6 @@ Hive::Hive(int x, int y, int beeCapacity, int mapSize) {
     // random color
     this->color = sf::Color(rand() % 255, rand() % 255, rand() % 255);
 
-
     //std::cout << "Hive created" << std::endl;
 }
 
@@ -28,16 +25,6 @@ Hive::~Hive() {
     for (int i = 0; i < beeCount; i++) {
         delete bees[i];
     }
-}
-
-// getX
-int Hive::getX() const{
-    return x;
-}
-
-// getY
-int Hive::getY() const{
-    return y;
 }
 
 // getScore
@@ -146,3 +133,8 @@ void Hive::makeHivesStopFollowing() {
         bees[i]->makeBeesStopFollowing();
     }
 }
+
+bool Hive::isHive() const {
+    return true;
+}
+

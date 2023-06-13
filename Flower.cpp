@@ -8,7 +8,7 @@
 using namespace std;
 
 
-Flower::Flower(int x, int y, int score) : x(x), y(y), score(score) {
+Flower::Flower(int x, int y, int score) : BeeTarget(x, y), score(score) {
     color = sf::Color::White;
     //std::cout << "Flower created" << std::endl;
 }
@@ -17,14 +17,6 @@ Flower::~Flower() = default;
 
 void Flower::setScore(int newScore) {
     this->score = newScore;
-}
-
-int Flower::getX() const {
-    return x;
-}
-
-int Flower::getY() const {
-    return y;
 }
 
 vector<Bee*> & Flower::getBeesThatFollow() {
@@ -81,4 +73,8 @@ void Flower::draw(sf::RenderWindow &window) const {
     shape.setFillColor(color);
     shape.setPosition(x, y);
     window.draw(shape);
+}
+
+bool Flower::isFlower() const {
+    return true;
 }
