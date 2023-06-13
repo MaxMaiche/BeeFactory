@@ -1,15 +1,9 @@
 # ninja log v5
-4	752	7083801807424792	CMakeFiles/untitled.dir/main.cpp.obj	71770c754d5fd143
-2	171	7083533929815464	build.ninja	5866b48f73033da6
-7	962	7083675666557772	CMakeFiles/untitled.dir/Bee.cpp.obj	29554ac3a3ea5059
-904	1073	7083801810597670	untitled.exe	696ae1a5df6a3d9c
-3	808	7083675665006367	CMakeFiles/untitled.dir/Hive.cpp.obj	ea847acf20c2c3b1
+12	638	7083811057662945	CMakeFiles/untitled.dir/main.cpp.obj	71770c754d5fd143
+2	171	7083811186582179	build.ninja	5866b48f73033da6
+5	828	7083811059564671	CMakeFiles/untitled.dir/Bee.cpp.obj	29554ac3a3ea5059
+828	972	7083811060975954	untitled.exe	696ae1a5df6a3d9c
+9	677	7083811058053301	CMakeFiles/untitled.dir/Hive.cpp.obj	ea847acf20c2c3b1
 1	11	0	clean	b8f5337ad683005f
-9	904	7083801808926150	CMakeFiles/untitled.dir/Garden.cpp.obj	752d9fcfc386cb45
+15	821	7083811059484601	CMakeFiles/untitled.dir/Garden.cpp.obj	752d9fcfc386cb45
 15	991	7083675666838028	CMakeFiles/untitled.dir/Flower.cpp.obj	6d2b0a22854fc21a
-4	1019	7083807157867157	CMakeFiles/untitled.dir/Garden.cpp.obj	752d9fcfc386cb45
-1019	1179	7083807159428572	untitled.exe	696ae1a5df6a3d9c
-4	892	7083808824667329	CMakeFiles/untitled.dir/Garden.cpp.obj	752d9fcfc386cb45
-893	1044	7083808826158676	untitled.exe	696ae1a5df6a3d9c
-5	971	7083809358509632	CMakeFiles/untitled.dir/Garden.cpp.obj	752d9fcfc386cb45
-972	1119	7083809359960942	untitled.exe	696ae1a5df6a3d9c
