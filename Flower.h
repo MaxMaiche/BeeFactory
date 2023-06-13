@@ -35,8 +35,10 @@ public:
     void setScore(int newScore);
     bool beenManged();
     bool isDead();
+    int distanceTo(int x, int y) const;
     void print() const;
     void draw(sf::RenderWindow &window) const;
+
 };
 
 

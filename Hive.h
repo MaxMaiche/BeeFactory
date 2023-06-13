@@ -5,23 +5,28 @@
 #ifndef UNTITLED_HIVE_H
 #define UNTITLED_HIVE_H
 
-
-#include "Bee.h"
 #include <vector>
 #include <SFML/Graphics.hpp>
 
 using namespace std;
 
+class Bee;
+class Flower;
+
 class Hive {
 private:
+
     int x;
     int y;
     int score;
-    sf::Color color;
+    int mapSize;
     int beeCount;
     int beeCapacity;
+    sf::Color color;
     vector<Bee*> bees;
-    int mapSize;
+    Flower* nearestFlower;
+    int actualMinDistance;
+
 
 public:
     // constructor
@@ -36,6 +41,18 @@ public:
     int getScore() const;
     //getBees
     vector<Bee*> & getBees();
+    // getColor
+    sf::Color getColor() const;
+    // getmapSize
+    int getMapSize() const;
+    // getNearestFlower
+    Flower* getNearestFlower() const;
+    // setNearestFlower
+    void setNearestFlower(Flower* flower);
+    // getActualMinDistance
+    int getActualMinDistance() const;
+    // setActualMinDistance
+    void setActualMinDistance(int distance);
     // print
     void print();
     // add bee

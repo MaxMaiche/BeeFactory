@@ -53,13 +53,19 @@ public:
     // make bees stop following mouse
     void makeGardenStopFollowing();
     // make bees follow random flower
-    void makeGardenFollowRandomFlower();
+    void makeGardenFollow();
     // Make one bee follow random flower
     void makeOneBeeFollowRandomFlower(Bee* bee);
     // assign new flower to beethatneednewflower
     void assignNewFlowerToBeeThatNeedNewFlower();
     // check bee full
     void checkBeeFull();
+    // Calculate nearest flower for each hive
+    void calculateNearestFlowerForHives();
+    // Make one bee follow nearest flower
+    void makeOneBeeFollowNearestFlower(Bee* bee);
+    // Make bees follow nearest flower
+    void makeBeesFollowNearestFlower();
 };
 
 

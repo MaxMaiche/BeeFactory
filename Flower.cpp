@@ -2,6 +2,7 @@
 // Created by Coralie Desquiens on 11/06/2023.
 //
 #include <iostream>
+#include <valarray>
 #include "Flower.h"
 
 using namespace std;
@@ -62,6 +63,12 @@ bool Flower::beenManged() {
 bool Flower::isDead() {
     if (score <= 0) return true;
     return false;
+}
+
+int Flower::distanceTo(int x, int y) const {
+    int deltaX = this->x - x;
+    int deltaY = this->y - y;
+    return sqrt( deltaX*deltaX + deltaY*deltaY);
 }
 
 void Flower::print() const {

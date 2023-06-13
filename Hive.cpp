@@ -10,9 +10,11 @@
 Hive::Hive(int x, int y, int beeCapacity, int mapSize) {
     this->x = x;
     this->y = y;
-    this->beeCapacity = beeCapacity;
-    this->beeCount = 0;
+    this->score = 0;
     this->mapSize = mapSize;
+    this->beeCount = 0;
+    this->beeCapacity = beeCapacity;
+    this->nearestFlower = nullptr;
 
     // random color
     this->color = sf::Color(rand() % 255, rand() % 255, rand() % 255);
@@ -48,6 +50,35 @@ std::vector<Bee*> & Hive::getBees() {
     return bees;
 }
 
+// getColor
+sf::Color Hive::getColor() const{
+    return color;
+}
+
+// getmapSize
+int Hive::getMapSize() const{
+    return mapSize;
+}
+
+// getNearestFlower
+Flower* Hive::getNearestFlower() const{
+    return nearestFlower;
+}
+
+// setNearestFlower
+void Hive::setNearestFlower(Flower* flower) {
+    nearestFlower = flower;
+}
+// getActualMinDistance
+int Hive::getActualMinDistance() const{
+    return actualMinDistance;
+}
+
+// setActualMinDistance
+void Hive::setActualMinDistance(int distance) {
+    actualMinDistance = distance;
+}
+
 // print
 void Hive::print() {
     std::cout << "Hive: x=" << x << ", y=" << y << ", beeCapacity=" << beeCapacity << std::endl;
@@ -71,7 +102,7 @@ bool Hive::addBee(Bee* bee) {
 
 // make it full
 void Hive::makeFull() {
-    while (addBee(new Bee(1, x, y, color, mapSize)));
+    while (addBee(new Bee(this)));
 }
 
 // add score

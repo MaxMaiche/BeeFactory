@@ -9,22 +9,19 @@
 #include "Bee.h"
 
 // constructor
-Bee::Bee(int age, int x, int y, sf::Color color, int mapSize) {
-    this->age = age;
-    this->x = x;
-    this->y = y;
-    this->hiveX = x;
-    this->hiveY = y;
-    this->color = color;
+Bee::Bee(Hive* hive) {
+    this->age = 0;
+    this->x = hive->getX();
+    this->y = hive->getY();
+    this->hive = hive;
     this->shape = sf::CircleShape(5, 3);
-    shape.setFillColor(color);
+    shape.setFillColor(hive->getColor());
     this->speed = 1;
     this->rotation = rand() % 360;
-    this->mapSize = mapSize;
     this->isFollowing = false;
     this->followX = 0;
     this->followY = 0;
-
+    this->Capacity = 0;
 }
 
 // destructor
@@ -48,6 +45,11 @@ int Bee::getX() const {
 // getY
 int Bee::getY() const {
     return y;
+}
+
+// getNearestFlower
+Flower* Bee::getNearestFlower() const {
+    return hive->getNearestFlower();
 }
 
 // draw
@@ -96,13 +98,13 @@ void Bee::update() {
     x += round(cos(radians)) * speed;
     y += round(sin(radians)) * speed;
 
-
+    int mapsizetemp = hive->getMapSize();
     // test de bordure
-    if (x < 0) x = mapSize-1;
-    else if (x > mapSize) x = 0;
+    if (x < 0) x = mapsizetemp-1;
+    else if (x > mapsizetemp) x = 0;
 
-    if (y < 0) y = mapSize-1;
-    else if (y > mapSize) y = 0;
+    if (y < 0) y = mapsizetemp-1;
+    else if (y > mapsizetemp) y = 0;
 
 
     // vieillissement
@@ -120,8 +122,8 @@ void Bee::makeBeesFollow(int f_x, int f_y) {
 // make bee follow hive
 void Bee::makeBeesFollowHive() {
     isFollowing = true;
-    followX = hiveX;
-    followY = hiveY;
+    followX = hive->getX();
+    followY = hive->getY();
 }
 
 // make bees stop following mouse
@@ -129,6 +131,14 @@ void Bee::makeBeesStopFollowing() {
     isFollowing = false;
 }
 
+// isIn
+bool Bee::isIn(int tx, int ty, int delta) const {
+    return (x > tx - delta &&
+            x < tx + delta &&
+            y > ty - delta &&
+            y < ty + delta
+    );
+}
 
 // pick up pollen
 void Bee::pickUpPollen() {
@@ -145,5 +155,5 @@ int Bee::dropPollen() {
 
 // Bee is full
 bool Bee::isFull() {
-    return Capacity == 1;
+    return Capacity == 3;
 }

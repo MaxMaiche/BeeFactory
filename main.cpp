@@ -22,7 +22,7 @@ int main() {
 
     // Creation abeilles
     garden->makeHivesFull();
-    garden->makeGardenFollowRandomFlower();
+    garden->makeGardenFollow();
 
     // Boucle principale
     while (window.isOpen()) {
