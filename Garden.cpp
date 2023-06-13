@@ -251,6 +251,10 @@ void Garden::makeOneBeeFollowNearestFlower(Bee *bee) {
         // Maybe bug sur redirection test si abeille deja focus sur fleures
         bee->makeBeesFollow(bee->getNearestFlower()->getX(), bee->getNearestFlower()->getY());
         bee->getNearestFlower()->addBeeThatFollow(bee);
+        // delete bee from vector
+        beesThatNeedNewFlower.erase(
+                std::remove(beesThatNeedNewFlower.begin(), beesThatNeedNewFlower.end(), bee),
+                beesThatNeedNewFlower.end());
     } else {
         makeOneBeeFollowRandomFlower(bee);
     }
