@@ -209,7 +209,7 @@ void Garden::makeGardenFollow() {
 void Garden::assignNewFlowerToBeeThatNeedNewFlower(){
     // make bees stop following mouse
     for (auto & bee : beesThatNeedNewFlower) {
-        if (!bee->isFull()) makeOneBeeFollowNearestFlower(bee);
+        if (!bee->isFull()) makeOneBeeFollowNearestFlower(bee); //makeOneBeeFollowRandomFlower(bee);
         else bee->makeBeesFollowHive();
     }
 }

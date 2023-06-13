@@ -47,7 +47,7 @@ int main() {
                         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
                         // create new flower
-                        Flower* newFlower = new Flower(mousePos.x, mousePos.y, 10);
+                        auto* newFlower = new Flower(mousePos.x, mousePos.y, 10);
                         garden->addFlower(newFlower);
 
                         // Make bees follow mouse
