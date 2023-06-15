@@ -112,27 +112,14 @@ void Hive::draw(sf::RenderWindow &window) {
 }
 
 
-// update
+// updateposition
 void Hive::update() {
-    // update bees
+    // updateposition bees
     for (int i = 0; i < beeCount; i++) {
-        bees[i]->update();
+        bees[i]->updateposition();
     }
 }
 
-// make bees follow mouse
-void Hive::makeHivesFollow(int x, int y) {
-    for (int i = 0; i < beeCount; i++) {
-        bees[i]->makeBeesFollow(x, y);
-    }
-}
-
-// make bees stop following mouse
-void Hive::makeHivesStopFollowing() {
-    for (int i = 0; i < beeCount; i++) {
-        bees[i]->makeBeesStopFollowing();
-    }
-}
 
 bool Hive::isHive() const {
     return true;

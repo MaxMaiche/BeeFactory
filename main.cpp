@@ -14,18 +14,29 @@ int main() {
 
     // Creation jardin
     auto *garden = new Garden(BEECAPACITY, MAPSIZE);
-    // Creation fleurs
-    garden->addFlowers(0, 10);
 
-    // Creation ruche
+    // Creation ruches
     garden->addHives(0, BEECAPACITY);
 
     // Creation abeilles
     garden->makeHivesFull();
-    garden->makeGardenFollow();
+
+    // Creation fleurs et calcul de la distance ruches
+    garden->addFlowers(0, 10);
+
+    // compute nearest flowers
+    garden->calculateNearestFlowerForHives();
+
+    // Add targets for bees
+    garden->makeBeesFollowNearestFlower();
+
 
     // Boucle principale
     while (window.isOpen()) {
+        //reset garden state
+        garden->cleanSlateForTick();
+
+
         // Gestion des événements
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
@@ -60,17 +71,14 @@ int main() {
         // Effacement de la fenêtre
         window.clear();
 
-        // Check if bee is on flower or hive
-        garden->checkBeeOnFlowerOrHive();
+        //pick and drop pollens
+        garden->checkBeesOnFlowerOrHive();
 
-        // Check if flower score is 0
-        garden->checkFlowerScore();
+        //reassigne bee targets
+        garden->assignNewTargets();
 
-        // Assign new flower to bees that need new flower
-        garden->assignNewFlowerToBeeThatNeedNewFlower();
-
-        // Check if bee is full
-        garden->checkBeeFull();
+        //bouger les abeilles
+        garden->updateBeesPositions();
 
         // Dessin du jardin
         garden->draw(window);
@@ -81,8 +89,6 @@ int main() {
         // Pause
         sf::sleep(sf::milliseconds(10));
 
-        // Mise à jour du jardin
-        garden->update();
 
         // print
         //garden.print();

@@ -3,13 +3,15 @@
 //
 // Created by Max on 10/06/2023.
 //
+#include "Bee.h"
 #include <cmath>
 #include <random>
 #include "Hive.h"
-#include "Bee.h"
+#include "Flower.h"
+
 
 // constructor
-Bee::Bee(Hive* hive) {
+Bee::Bee(Hive* hive) : target(NULL){
     this->age = 0;
     this->x = hive->getX();
     this->y = hive->getY();
@@ -18,9 +20,6 @@ Bee::Bee(Hive* hive) {
     shape.setFillColor(hive->getColor());
     this->speed = 1;
     this->rotation = rand() % 360;
-    this->isFollowing = false;
-    this->followX = 0;
-    this->followY = 0;
     this->Capacity = 0;
 }
 
@@ -59,13 +58,14 @@ void Bee::draw(sf::RenderWindow &window) {
     window.draw(shape);
 }
 
-// update
-void Bee::update() {
-    if (!isFollowing) {
-
+// updateposition
+void Bee::updateposition() {
+    if (target == NULL) {
         // Variation aléatoire de la direction
         rotation += rand() % 21 - 10;
     } else {
+        int followX = target->getX();
+        int followY = target->getY();
         // Calcul de la rotation pour suivre la cible
         int target_rotation = atan2(followY - y, followX - x) * 180 / M_PI;
         // Calcul de la différence entre la rotation actuelle et la rotation cible
@@ -109,27 +109,9 @@ void Bee::update() {
 
     // vieillissement
     age++;
-
 }
 
-// make bees follow mouse
-void Bee::makeBeesFollow(int f_x, int f_y) {
-    isFollowing = true;
-    followX = f_x;
-    followY = f_y;
-}
 
-// make bee follow hive
-void Bee::makeBeesFollowHive() {
-    isFollowing = true;
-    followX = hive->getX();
-    followY = hive->getY();
-}
-
-// make bees stop following mouse
-void Bee::makeBeesStopFollowing() {
-    isFollowing = false;
-}
 
 // isIn
 bool Bee::isIn(int tx, int ty, int delta) const {
@@ -141,14 +123,16 @@ bool Bee::isIn(int tx, int ty, int delta) const {
 }
 
 // pick up pollen
-void Bee::pickUpPollen() {
+void Bee::pickUpPollen(Flower* flower) {
     Capacity++;
+    flower->beenManged();
 }
 
 // drop pollen
 int Bee::dropPollen() {
     int temp = Capacity;
     Capacity = 0;
+    //cout<<getTarget()->isHive()<<endl;
     return temp;
 }
 
@@ -157,10 +141,31 @@ bool Bee::isFull() {
     return Capacity == 3;
 }
 
+bool Bee::isEmpty(){
+    return Capacity == 0;
+};
 BeeTarget* Bee::getTarget() {
     return target;
 }
 
 void Bee::setTarget(BeeTarget* newTargetAddress) {
     target = newTargetAddress;
+}
+
+void Bee::follow(Flower* flower){
+    if (target && target->isFlower())
+        ((Flower*)target)->removeBeeThatFollow(this);
+    setTarget(flower);
+    if (flower)
+        flower->addBeeThatFollow(this);
+}
+
+void Bee::follow(Hive* hive){
+    if (target && target->isFlower())
+        ((Flower*)target)->removeBeeThatFollow(this);
+    setTarget(hive);
+}
+
+bool Bee::needsToHeadToHive(){
+    return isFull();
 }

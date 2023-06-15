@@ -7,11 +7,7 @@
 using namespace std;
 
 // constructor
-Garden::Garden(int maxHives, int mapSize) {
-    this->maxHives = maxHives;
-    this->mapSize = mapSize;
-    this->flowerCount = 0;
-    this->actualHives = 0;
+Garden::Garden(int maxHives, int mapSize) : maxHives(maxHives), mapSize(mapSize){
 }
 
 // destructor
@@ -40,9 +36,8 @@ void Garden::print() {
 
 // add hive
 bool Garden::addHive(Hive *hive) {
-    if (actualHives < maxHives) {
+    if (hives.size() < maxHives) {
         hives.push_back(hive);
-        actualHives++;
         return true;
     } else {
         //std::cout << "Garden is full" << std::endl;
@@ -67,9 +62,8 @@ void Garden::makeHivesFull() {
 
 // add flower
 void Garden::addFlower(Flower *flower) {
-    flowerCount++;
     flowers.push_back(flower);
-    calculateNearestFlowerForHives();
+    newFlowers.push_back(flower);
 }
 
 // add flowers
@@ -79,7 +73,139 @@ void Garden::addFlowers(int nbFlower, int flowerScore) {
     }
 }
 
-// check if a flower score is 0
+// draw
+void Garden::draw(sf::RenderWindow &window) const {
+    // draw hives and bees
+    for (auto & hive : hives) {
+        hive->draw(window);
+    }
+    // draw flowers
+    for (auto & flower : flowers) {
+        flower->draw(window);
+    }
+}
+
+// Calculate nearest flower for each hive
+void Garden::calculateNearestFlowerForHives() {
+    if (flowers.empty()) return;
+    if (hives.empty()) return;
+    for (auto & hive : hives) {
+        hive->setNearestFlower(NULL);
+        for (auto & flower : flowers) if (!flower->isDead()){
+                if (hive->getNearestFlower() == nullptr ) {
+                    hive->setNearestFlower(flower);
+                    hive->setActualMinDistance(flower->distanceTo(hive->getX(), hive->getY()));
+                } else {
+                    if (hive->getActualMinDistance() > flower->distanceTo(hive->getX(), hive->getY())) {
+                        hive->setNearestFlower(flower);
+                        hive->setActualMinDistance(flower->distanceTo(hive->getX(), hive->getY()));
+                    }
+                }
+            }
+    }
+}
+
+
+
+// move Bees
+void Garden::updateBeesPositions() {
+    // updateposition hives
+    for (auto & hive : hives) {
+        hive->update();
+    }
+}
+
+// pick and/or drop pollen, update bee and hive score
+void Garden::checkBeesOnFlowerOrHive() {
+    for (auto &hive: hives) {
+        for (auto &bee: hive->getBees()) {
+            for (auto &flower: flowers) {
+                if (bee->isIn(flower->getX(), flower->getY(), 15)
+                    && (!flower->isDead() && !bee->isFull())) {
+                    // add score to hive
+                    bee->pickUpPollen(flower);
+                }
+            }
+            if (bee->isIn(hive->getX(), hive->getY(), 15)) {
+                // add score to hive
+                hive->addScore(bee->dropPollen());
+                //beesThatNeedNewFlower.push_back(bee);
+            }
+        }
+    }
+}
+
+
+Flower* Garden::getRandomFlower() {
+    if (flowers.size() > 0) {
+        int random = rand() % flowers.size();
+        return flowers[random];
+    }
+    else
+        return NULL;
+}
+
+
+// Make one bee follow nearest flower
+void Garden::makeOneBeeFollowNearestFlower(Bee *bee) {
+    bee->follow(bee->getNearestFlower());
+}
+
+// Make bees follow nearest flower
+void Garden::makeBeesFollowNearestFlower() {
+    for (auto & hive : hives) {
+        for (auto & bee : hive->getBees()) {
+            makeOneBeeFollowNearestFlower(bee);
+        }
+    }
+}
+
+void Garden::cleanSlateForTick() {
+    beesThatNeedNewFlower.clear();
+    newFlowers.clear();
+    deadFlowers.clear();
+}
+
+void Garden::assignNewTargets() {
+    //first, check if dead flowers
+    for (auto &flower: flowers)
+        if (flower->isDead())
+            deadFlowers.push_back(flower);
+
+    //then, recompute distances if necessary
+    if (newFlowers.size() || deadFlowers.size())
+        calculateNearestFlowerForHives();
+
+    //then, adjust targets for bees
+    for (auto &hive: hives) {
+        for (auto &bee: hive->getBees()) {
+            if (bee->needsToHeadToHive() && bee->getTarget() != hive)
+                bee->follow(hive);
+            else if (bee->getTarget() == NULL ||
+                     bee->getTarget()->isFlower() &&
+                     (((Flower *) bee->getTarget())->isDead() || bee->getTarget() != bee->getNearestFlower())
+                    ) {
+                bee->follow(bee->getNearestFlower());
+            }
+            else if (bee->isEmpty() && bee->getTarget() == hive) {
+                cout<<"mpty bee"<<endl;
+                bee->follow(bee->getNearestFlower());
+            }
+        }
+    }
+
+    //pluck deadflowers
+    std::vector<Flower *> copyFlowers = flowers;
+    flowers.clear();
+    for (auto &flower: copyFlowers) {
+        if (!flower->isDead())
+            flowers.push_back(flower);
+        else delete flower;
+    }
+
+}
+
+/*
 void Garden::checkFlowerScore() {
     // make a copy of flowers
     bool oneDead = false;
@@ -117,154 +243,9 @@ void Garden::checkFlowerScore() {
     }
 
 }
-
-// check bee on flower or hive
-void Garden::checkBeeOnFlowerOrHive() {
-    for (auto & hive : hives) {
-        for (auto & bee : hive->getBees()) {
-            for (auto & flower : flowers) {
-                if (bee->isIn(flower->getX(), flower->getY(), 15)
-                && (!flower->isDead() && !bee->isFull())) {
-                    // add score to hive
-                    bee->pickUpPollen();
-                    flower->beenManged();
-                    flower->removeBeeThatFollow(bee);
-                    bee->makeBeesFollow(hive->getX(), hive->getY());
-                }
-            }
-            int delta=15;
-            if ( bee->isIn(hive->getX(), hive->getY(), delta)) {
-                // add score to hive
-                hive->addScore(bee->dropPollen());
-                beesThatNeedNewFlower.push_back(bee);
-            }
-        }
-    }
-}
+ */
 
 
-// draw
-void Garden::draw(sf::RenderWindow &window) const {
-    // draw hives and bees
-    for (auto & hive : hives) {
-        hive->draw(window);
-    }
-    // draw flowers
-    for (auto & flower : flowers) {
-        flower->draw(window);
-    }
-}
 
-// update
-void Garden::update() {
-    // update hives
-    for (auto & hive : hives) {
-        hive->update();
-    }
-}
 
-// make bees follow
-void Garden::makeGardenFollow(int x, int y)  {
-    // make bees follow mouse
-    for (auto & hive : hives) {
-        hive->makeHivesFollow(x, y);
-    }
-}
 
-// make bees stop following
-void Garden::makeGardenStopFollowing() {
-    // make bees stop following mouse
-    for (auto & hive : hives) {
-        hive->makeHivesStopFollowing();
-    }
-}
-
-// make one bee follow random flower
-void Garden::makeOneBeeFollowRandomFlower(Bee *bee) {
-
-    if (flowers.size() > 0) {
-        int random = rand() % flowers.size();
-        bee->makeBeesFollow(flowers[random]->getX(), flowers[random]->getY());
-        flowers[random]->addBeeThatFollow(bee);
-        // delete bee from vector
-        beesThatNeedNewFlower.erase(
-                std::remove(beesThatNeedNewFlower.begin(), beesThatNeedNewFlower.end(), bee),
-                beesThatNeedNewFlower.end());
-    }else{
-        bee->makeBeesStopFollowing();
-    }
-}
-
-// make bees follow random flower
-void Garden::makeGardenFollow() {
-    // make bees stop following mouse
-    for (auto & hive : hives) {
-        for (auto & bee : hive->getBees()) {
-            beesThatNeedNewFlower.push_back(bee);
-        }
-    }
-}
-
-// make bees follow random flower
-void Garden::assignNewFlowerToBeeThatNeedNewFlower(){
-    // make bees stop following mouse
-    for (auto & bee : beesThatNeedNewFlower) {
-        if (!bee->isFull()) makeOneBeeFollowNearestFlower(bee); //makeOneBeeFollowRandomFlower(bee);
-        else bee->makeBeesFollowHive();
-    }
-}
-
-// check bee full
-void Garden::checkBeeFull() {
-    // make bees stop following mouse
-    for (auto & hive : hives) {
-        for (auto & bee : hive->getBees()) {
-            if (bee->isFull()) {
-                bee->makeBeesFollowHive();
-            }
-        }
-    }
-}
-
-// Calculate nearest flower for each hive
-void Garden::calculateNearestFlowerForHives() {
-    if (flowers.empty()) return;
-    if (hives.empty()) return;
-    for (auto & hive : hives) {
-        for (auto & flower : flowers) {
-            if (hive->getNearestFlower() == nullptr) {
-                hive->setNearestFlower(flower);
-                hive->setActualMinDistance(flower->distanceTo(hive->getX(), hive->getY()));
-            } else {
-                if (hive->getActualMinDistance() > flower->distanceTo(hive->getX(), hive->getY())) {
-                    hive->setNearestFlower(flower);
-                    hive->setActualMinDistance(flower->distanceTo(hive->getX(), hive->getY()));
-                }
-            }
-        }
-    }
-}
-
-// Make one bee follow nearest flower
-void Garden::makeOneBeeFollowNearestFlower(Bee *bee) {
-    if (bee->getNearestFlower() != nullptr){
-        // Maybe bug sur redirection test si abeille deja focus sur fleures
-        bee->makeBeesFollow(bee->getNearestFlower()->getX(), bee->getNearestFlower()->getY());
-        bee->getNearestFlower()->addBeeThatFollow(bee);
-        // delete bee from vector
-        beesThatNeedNewFlower.erase(
-                std::remove(beesThatNeedNewFlower.begin(), beesThatNeedNewFlower.end(), bee),
-                beesThatNeedNewFlower.end());
-    } else {
-        makeOneBeeFollowRandomFlower(bee);
-    }
-}
-
-// Make bees follow nearest flower
-void Garden::makeBeesFollowNearestFlower() {
-    for (auto & hive : hives) {
-        for (auto & bee : hive->getBees()) {
-            makeOneBeeFollowNearestFlower(bee);
-        }
-    }
-}

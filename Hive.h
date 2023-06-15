@@ -64,7 +64,7 @@ public:
     void addScore(int score);
     // draw
     void draw(sf::RenderWindow &window);
-    // update
+    // updateposition
     void update();
     // make bees follow mouse
     void makeHivesFollow(int x, int y);

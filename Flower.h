@@ -26,9 +26,10 @@ public:
     ~Flower();
 
     vector<Bee*> & getBeesThatFollow();
+
     void addBeeThatFollow(Bee *bee);
     void removeBeeThatFollow(Bee *bee);
-    vector<Bee*> clearBeesThatFollow();
+
     void setScore(int newScore);
     bool beenManged();
     bool isDead();

@@ -15,11 +15,15 @@ private:
 
     int mapSize;
     int maxHives;
-    int actualHives;
-    int flowerCount;
+
     vector<Hive*> hives;
     vector<Flower*> flowers;
+
+    //per tick lists to speed up
     vector<Bee*> beesThatNeedNewFlower;
+    vector<Flower*> deadFlowers;
+    vector<Flower*> newFlowers;
+
 
 public:
     // constructor
@@ -40,32 +44,27 @@ public:
     void addFlower(Flower *flower);
     // add flowers
     void addFlowers(int nbFlower, int flowerScore);
-    // Check if a flower score is 0
-    void checkFlowerScore();
-    // Check Bee on flower or Hive
-    void checkBeeOnFlowerOrHive();
+
     // draw
     void draw(sf::RenderWindow &window) const;
-    // update
-    void update();
-    // make bees follow mouse
-    void makeGardenFollow(int x, int y);
-    // make bees stop following mouse
-    void makeGardenStopFollowing();
-    // make bees follow random flower
-    void makeGardenFollow();
-    // Make one bee follow random flower
-    void makeOneBeeFollowRandomFlower(Bee* bee);
-    // assign new flower to beethatneednewflower
-    void assignNewFlowerToBeeThatNeedNewFlower();
-    // check bee full
-    void checkBeeFull();
+    Flower* getRandomFlower();
+
+
     // Calculate nearest flower for each hive
     void calculateNearestFlowerForHives();
     // Make one bee follow nearest flower
     void makeOneBeeFollowNearestFlower(Bee* bee);
     // Make bees follow nearest flower
     void makeBeesFollowNearestFlower();
+
+    // Check Bee on flower or Hive
+    void checkBeesOnFlowerOrHive();
+    // updateposition
+    void updateBeesPositions();
+    //reset all states for each tick
+    void cleanSlateForTick();
+    //assign new targets to bees according to flower and bee status
+    void assignNewTargets();
 };
 
 

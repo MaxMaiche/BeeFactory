@@ -36,21 +36,11 @@ void Flower::removeBeeThatFollow(Bee *bee) {
     }
 }
 
-vector<Bee*> Flower::clearBeesThatFollow() {
-    vector<Bee*> bees = beesThatFollow;
-    for(auto & bee : beesThatFollow) {
-        bee->makeBeesStopFollowing();
-    }
-    beesThatFollow.clear();
-    return bees;
-}
-
 bool Flower::beenManged() {
     score--;
     if (score <= 0) return true;
     return false;
 }
-
 
 bool Flower::isDead() {
     if (score <= 0) return true;
