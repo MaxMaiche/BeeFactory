@@ -29,14 +29,15 @@ public:
     void addBeeThatFollow(Bee *bee);
     void removeBeeThatFollow(Bee *bee);
     vector<Bee*> clearBeesThatFollow();
+    int getScore() const;
     void setScore(int newScore);
-    bool beenManged();
-    bool isDead();
-    int distanceTo(int x, int y) const;
+    bool beenManged(int nbPollen);
+    [[nodiscard]] bool isDead() const;
+    [[nodiscard]] int distanceTo(int x, int y) const;
     void print() const;
     void draw(sf::RenderWindow &window) const;
 
-    bool isFlower() const override;
+    [[nodiscard]] bool isFlower() const override;
 
 };
 

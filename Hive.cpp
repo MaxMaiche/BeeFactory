@@ -68,11 +68,11 @@ void Hive::setActualMinDistance(int distance) {
 
 // print
 void Hive::print() {
-    std::cout << "Hive: x=" << x << ", y=" << y << ", beeCapacity=" << beeCapacity << std::endl;
+    std::cout << "Hive score : " << score  << std::endl;
     // print bees
-    for (int i = 0; i < beeCount; i++) {
-        bees[i]->print();
-    }
+//    for (int i = 0; i < beeCount; i++) {
+//        bees[i]->print();
+//    }
 }
 
 // add bee

@@ -19,6 +19,10 @@ void Flower::setScore(int newScore) {
     this->score = newScore;
 }
 
+int Flower::getScore() const {
+    return score;
+}
+
 vector<Bee*> & Flower::getBeesThatFollow() {
     return beesThatFollow;
 }
@@ -45,14 +49,14 @@ vector<Bee*> Flower::clearBeesThatFollow() {
     return bees;
 }
 
-bool Flower::beenManged() {
-    score--;
+bool Flower::beenManged(int nbPollen) {
+    score -= nbPollen;
     if (score <= 0) return true;
     return false;
 }
 
 
-bool Flower::isDead() {
+bool Flower::isDead() const {
     if (score <= 0) return true;
     return false;
 }

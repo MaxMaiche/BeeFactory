@@ -8,6 +8,8 @@
 #include "Hive.h"
 #include "Bee.h"
 
+#define MAX_CAPACITY 3
+
 // constructor
 Bee::Bee(Hive* hive) {
     this->age = 0;
@@ -21,19 +23,20 @@ Bee::Bee(Hive* hive) {
     this->isFollowing = false;
     this->followX = 0;
     this->followY = 0;
-    this->Capacity = 0;
+    this->capacity = 0;
+    this->maxCapacity = MAX_CAPACITY;
 }
 
 // destructor
 Bee::~Bee() = default;
 
 // print
-void Bee::print() {
+void Bee::print() const{
     std::cout << "Bee: age=" << age << ", x=" << x << ", y=" << y << " Rotation="<< rotation <<std::endl;
 }
 
 // getAge
-int Bee::getAge() {
+int Bee::getAge() const{
     return age;
 }
 
@@ -45,6 +48,16 @@ int Bee::getX() const {
 // getY
 int Bee::getY() const {
     return y;
+}
+
+// getCapacity
+int Bee::getCapacity() const{
+    return capacity;
+}
+
+// getMaxCapacity
+int Bee::getActualCapacity() const{
+    return maxCapacity - capacity;
 }
 
 // getNearestFlower
@@ -141,20 +154,20 @@ bool Bee::isIn(int tx, int ty, int delta) const {
 }
 
 // pick up pollen
-void Bee::pickUpPollen() {
-    Capacity++;
+void Bee::pickUpPollen(int pollen) {
+    capacity += pollen;
 }
 
 // drop pollen
 int Bee::dropPollen() {
-    int temp = Capacity;
-    Capacity = 0;
+    int temp = capacity;
+    capacity = 0;
     return temp;
 }
 
 // Bee is full
 bool Bee::isFull() {
-    return Capacity == 3;
+    return capacity == maxCapacity;
 }
 
 BeeTarget* Bee::getTarget() {

@@ -17,7 +17,8 @@ private:
     int x;
     int y;
     int age;
-    int Capacity;
+    int capacity;
+    int maxCapacity;
 
     Hive* hive;
     sf::CircleShape shape;
@@ -42,11 +43,15 @@ public:
     // getY
     int getY() const;
     // getAge
-    int getAge();
+    int getAge() const;
+    // getCapacity
+    int getCapacity() const;
+    // get maxCapacity
+    int getActualCapacity() const;
     // getNearestFlower
     Flower* getNearestFlower() const;
     // print
-    void print();
+    void print() const;
     // draw
     void draw(sf::RenderWindow &window);
     // update
@@ -61,7 +66,7 @@ public:
     bool isIn(int tx, int ty, int delta) const;
 
     // pick up pollen
-    void pickUpPollen();
+    void pickUpPollen(int pollen);
     // drop pollen
     int dropPollen();
 

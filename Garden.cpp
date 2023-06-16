@@ -31,7 +31,7 @@ std::vector<Hive*> & Garden::getHives() {
 
 // print
 void Garden::print() {
-    std::cout << "Garden: size=" << mapSize << std::endl;
+    std::cout << "Garden: \n" << std::endl;
     // print hives
     for (auto & hive : hives) {
         hive->print();
@@ -126,8 +126,11 @@ void Garden::checkBeeOnFlowerOrHive() {
                 if (bee->isIn(flower->getX(), flower->getY(), 15)
                 && (!flower->isDead() && !bee->isFull())) {
                     // add score to hive
-                    bee->pickUpPollen();
-                    flower->beenManged();
+                    int beeCapacity = bee->getActualCapacity();
+                    int flowerScore = flower->getScore();
+                    int inter = min(beeCapacity, flowerScore);
+                    bee->pickUpPollen(inter);
+                    flower->beenManged(inter);
                     flower->removeBeeThatFollow(bee);
                     bee->makeBeesFollow(hive->getX(), hive->getY());
                 }

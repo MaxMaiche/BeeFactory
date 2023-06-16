@@ -3,8 +3,8 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(/opt/homebrew/Cellar/sfml/2.5.1_2/include)
-link_directories(/opt/homebrew/Cellar/sfml/2.5.1_2/lib)
+include_directories(lib/include)
+link_directories(lib/lib)
 
 add_executable(untitled main.cpp Bee.cpp Bee.h Hive.h Hive.cpp Garden.h Garden.cpp Flower.cpp Flower.h BeeTarget.cpp BeeTarget.h)
 
