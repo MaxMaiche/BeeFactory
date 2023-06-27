@@ -74,7 +74,7 @@ int main() {
         //pick and drop pollens
         garden->checkBeesOnFlowerOrHive();
 
-        //reassigne bee targets
+        //reassign bee targets
         garden->assignNewTargets();
 
         //bouger les abeilles

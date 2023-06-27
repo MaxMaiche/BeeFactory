@@ -16,9 +16,6 @@ class Flower;
 
 class Hive : public BeeTarget {
 private:
-
-    //int x;
-    //int y;
     int score;
     int mapSize;
     int beeCount;
@@ -34,10 +31,6 @@ public:
     Hive(int x, int y, int beeCapacity, int mapSize);
     // destructor
     ~Hive();
-    // getX
-    //int getX() const;
-    // getY
-    //int getY() const;
     // getScore
     int getScore() const;
     //getBees
@@ -66,10 +59,6 @@ public:
     void draw(sf::RenderWindow &window);
     // updateposition
     void update();
-    // make bees follow mouse
-    void makeHivesFollow(int x, int y);
-    // make bees stop following mouse
-    void makeHivesStopFollowing();
 
     bool isHive() const override;
 
